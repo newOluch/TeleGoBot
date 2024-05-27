@@ -60,6 +60,7 @@ func (c *Client) Updates(offset int, limit int) (updates []Update, err error) { 
 	return res.Result, nil
 }
 
+// метод SendMessage используется для отправки сообщения в указанный чат
 func (c *Client) SendMessage(chatID int, text string) error {
 	q := url.Values{}
 	q.Add("chat_id", strconv.Itoa(chatID))
@@ -74,6 +75,7 @@ func (c *Client) SendMessage(chatID int, text string) error {
 	return nil
 }
 
+// Метод, в котором формируется полный URL, включая host, basePath и метод
 func (c *Client) doRequest(method string, query url.Values) (data []byte, err error) {
 
 	defer func() { err = e.WrapIfErr("can't do request", err) }()
@@ -84,7 +86,7 @@ func (c *Client) doRequest(method string, query url.Values) (data []byte, err er
 		Path:   path.Join(c.basePath, method), // c.basePath + method
 	}
 
-	req, err := http.NewRequest(http.MethodGet, u.String(), nil)
+	req, err := http.NewRequest(http.MethodGet, u.String(), nil) // cоздаётся новый HTTP-запрос
 
 	if err != nil {
 		return nil, err
